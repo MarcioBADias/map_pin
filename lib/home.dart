@@ -1,13 +1,11 @@
-import '/backend/firebase_storage/storage.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
+import '/flutter_flow/flutter_flow_google_map.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
-import '/flutter_flow/upload_data.dart';
 import 'dart:ui';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -34,12 +32,6 @@ class _HomeWidgetState extends State<HomeWidget> {
 
     _model.yourNameTextController ??= TextEditingController();
     _model.yourNameFocusNode ??= FocusNode();
-
-    _model.cityTextController ??= TextEditingController();
-    _model.cityFocusNode ??= FocusNode();
-
-    _model.myBioTextController ??= TextEditingController();
-    _model.myBioFocusNode ??= FocusNode();
   }
 
   @override
@@ -53,11 +45,13 @@ class _HomeWidgetState extends State<HomeWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Color(0xFFACDDE8),
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(100),
+        preferredSize:
+            Size.fromHeight(MediaQuery.sizeOf(context).height * 0.05),
         child: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).secondaryBackground,
+          backgroundColor: Color(0xFFFFAF4D),
           automaticallyImplyLeading: false,
           actions: [],
           flexibleSpace: FlexibleSpaceBar(
@@ -93,19 +87,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
-                    child: Text(
-                      'Create your Profile',
-                      style:
-                          FlutterFlowTheme.of(context).headlineMedium.override(
-                                fontFamily: 'Inter Tight',
-                                color: FlutterFlowTheme.of(context).primaryText,
-                                fontSize: 22,
-                                letterSpacing: 0.0,
-                              ),
-                    ),
-                  ),
                 ],
               ),
             ),
@@ -120,108 +101,19 @@ class _HomeWidgetState extends State<HomeWidget> {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 16),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    splashColor: Colors.transparent,
-                    focusColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    onTap: () async {
-                      final selectedMedia =
-                          await selectMediaWithSourceBottomSheet(
-                        context: context,
-                        imageQuality: 80,
-                        allowPhoto: true,
-                        backgroundColor:
-                            FlutterFlowTheme.of(context).primaryBackground,
-                        textColor: FlutterFlowTheme.of(context).primaryText,
-                        pickerFontFamily: 'Outfit',
-                      );
-                      if (selectedMedia != null &&
-                          selectedMedia.every((m) =>
-                              validateFileFormat(m.storagePath, context))) {
-                        safeSetState(() => _model.isDataUploading = true);
-                        var selectedUploadedFiles = <FFUploadedFile>[];
-
-                        var downloadUrls = <String>[];
-                        try {
-                          showUploadMessage(
-                            context,
-                            'Uploading file...',
-                            showLoading: true,
-                          );
-                          selectedUploadedFiles = selectedMedia
-                              .map((m) => FFUploadedFile(
-                                    name: m.storagePath.split('/').last,
-                                    bytes: m.bytes,
-                                    height: m.dimensions?.height,
-                                    width: m.dimensions?.width,
-                                    blurHash: m.blurHash,
-                                  ))
-                              .toList();
-
-                          downloadUrls = (await Future.wait(
-                            selectedMedia.map(
-                              (m) async =>
-                                  await uploadData(m.storagePath, m.bytes),
-                            ),
-                          ))
-                              .where((u) => u != null)
-                              .map((u) => u!)
-                              .toList();
-                        } finally {
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          _model.isDataUploading = false;
-                        }
-                        if (selectedUploadedFiles.length ==
-                                selectedMedia.length &&
-                            downloadUrls.length == selectedMedia.length) {
-                          safeSetState(() {
-                            _model.uploadedLocalFile =
-                                selectedUploadedFiles.first;
-                            _model.uploadedFileUrl = downloadUrls.first;
-                          });
-                          showUploadMessage(context, 'Success!');
-                        } else {
-                          safeSetState(() {});
-                          showUploadMessage(context, 'Failed to upload data');
-                          return;
-                        }
-                      }
-                    },
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).alternate,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(2),
-                        child: Container(
-                          width: 90,
-                          height: 90,
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                          ),
-                          child: CachedNetworkImage(
-                            fadeInDuration: Duration(milliseconds: 500),
-                            fadeOutDuration: Duration(milliseconds: 500),
-                            imageUrl:
-                                'https://images.unsplash.com/photo-1536164261511-3a17e671d380?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=630&q=80',
-                            fit: BoxFit.fitWidth,
-                          ),
-                        ),
-                      ),
-                    ),
+            Align(
+              alignment: AlignmentDirectional(0, 0),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 10),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: Image.asset(
+                    'assets/images/map-pin.png',
+                    width: 200,
+                    height: MediaQuery.sizeOf(context).height * 0.18,
+                    fit: BoxFit.cover,
                   ),
-                ],
+                ),
               ),
             ),
             Padding(
@@ -232,7 +124,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 textCapitalization: TextCapitalization.words,
                 obscureText: false,
                 decoration: InputDecoration(
-                  labelText: 'Your Name',
+                  labelText: 'Digite o endereço que deseja buscar',
                   labelStyle: FlutterFlowTheme.of(context).labelMedium.override(
                         fontFamily: 'Inter',
                         letterSpacing: 0.0,
@@ -279,63 +171,6 @@ class _HomeWidgetState extends State<HomeWidget> {
                     ),
                 validator:
                     _model.yourNameTextControllerValidator.asValidator(context),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 16),
-              child: TextFormField(
-                controller: _model.cityTextController,
-                focusNode: _model.cityFocusNode,
-                textCapitalization: TextCapitalization.words,
-                obscureText: false,
-                decoration: InputDecoration(
-                  labelText: 'Your City',
-                  labelStyle: FlutterFlowTheme.of(context).labelMedium.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                  hintStyle: FlutterFlowTheme.of(context).labelMedium.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).alternate,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).primary,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).error,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).error,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
-                ),
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Inter',
-                      letterSpacing: 0.0,
-                    ),
-                validator:
-                    _model.cityTextControllerValidator.asValidator(context),
               ),
             ),
             Padding(
@@ -422,63 +257,27 @@ class _HomeWidgetState extends State<HomeWidget> {
                 isMultiSelect: false,
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 12),
-              child: TextFormField(
-                controller: _model.myBioTextController,
-                focusNode: _model.myBioFocusNode,
-                textCapitalization: TextCapitalization.sentences,
-                obscureText: false,
-                decoration: InputDecoration(
-                  labelStyle: FlutterFlowTheme.of(context).labelMedium.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                  hintText: 'Your bio',
-                  hintStyle: FlutterFlowTheme.of(context).labelMedium.override(
-                        fontFamily: 'Inter',
-                        letterSpacing: 0.0,
-                      ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).alternate,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).primary,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  errorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).error,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  focusedErrorBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: FlutterFlowTheme.of(context).error,
-                      width: 2,
-                    ),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  filled: true,
-                  fillColor: FlutterFlowTheme.of(context).secondaryBackground,
-                  contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 0),
+                child: FlutterFlowGoogleMap(
+                  controller: _model.googleMapsController,
+                  onCameraIdle: (latLng) => _model.googleMapsCenter = latLng,
+                  initialLocation: _model.googleMapsCenter ??=
+                      LatLng(13.106061, -59.613158),
+                  markerColor: GoogleMarkerColor.violet,
+                  mapType: MapType.normal,
+                  style: GoogleMapStyle.standard,
+                  initialZoom: 14,
+                  allowInteraction: true,
+                  allowZoom: true,
+                  showZoomControls: true,
+                  showLocation: true,
+                  showCompass: false,
+                  showMapToolbar: false,
+                  showTraffic: false,
+                  centerMapOnMarkerTap: true,
                 ),
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: 'Inter',
-                      letterSpacing: 0.0,
-                    ),
-                textAlign: TextAlign.start,
-                maxLines: 3,
-                validator:
-                    _model.myBioTextControllerValidator.asValidator(context),
               ),
             ),
             Align(

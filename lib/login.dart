@@ -355,7 +355,7 @@ class _LoginWidgetState extends State<LoginWidget>
 
                                   context.goNamedAuth('Home', context.mounted);
                                 },
-                                text: 'Sign In',
+                                text: 'Entrar',
                                 options: FFButtonOptions(
                                   width: double.infinity,
                                   height: 44,
@@ -363,7 +363,7 @@ class _LoginWidgetState extends State<LoginWidget>
                                       0, 0, 0, 0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0, 0, 0, 0),
-                                  color: Color(0xFFE16464),
+                                  color: Color(0xFF4D67F9),
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
@@ -384,7 +384,7 @@ class _LoginWidgetState extends State<LoginWidget>
                               padding:
                                   EdgeInsetsDirectional.fromSTEB(16, 0, 16, 24),
                               child: Text(
-                                'Or sign in with',
+                                'Ou entrar com',
                                 textAlign: TextAlign.center,
                                 style: FlutterFlowTheme.of(context)
                                     .labelMedium
@@ -408,7 +408,7 @@ class _LoginWidgetState extends State<LoginWidget>
 
                                   context.goNamedAuth('Home', context.mounted);
                                 },
-                                text: 'Entrar com conta do Google',
+                                text: 'Entrar conta do Google',
                                 icon: FaIcon(
                                   FontAwesomeIcons.google,
                                   color: Color(0xFF4D67F9),
