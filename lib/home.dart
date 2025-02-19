@@ -97,14 +97,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(24, 0, 0, 0),
                     child: Text(
                       'Create your Profile',
-                      style: FlutterFlowTheme.of(
-                        context,
-                      ).headlineMedium.override(
-                        fontFamily: 'Inter Tight',
-                        color: FlutterFlowTheme.of(context).primaryText,
-                        fontSize: 22,
-                        letterSpacing: 0.0,
-                      ),
+                      style:
+                          FlutterFlowTheme.of(context).headlineMedium.override(
+                                fontFamily: 'Inter Tight',
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                fontSize: 22,
+                                letterSpacing: 0.0,
+                              ),
                     ),
                   ),
                 ],
@@ -135,18 +134,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                     onTap: () async {
                       final selectedMedia =
                           await selectMediaWithSourceBottomSheet(
-                            context: context,
-                            imageQuality: 80,
-                            allowPhoto: true,
-                            backgroundColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            textColor: FlutterFlowTheme.of(context).primaryText,
-                            pickerFontFamily: 'Outfit',
-                          );
+                        context: context,
+                        imageQuality: 80,
+                        allowPhoto: true,
+                        backgroundColor:
+                            FlutterFlowTheme.of(context).primaryBackground,
+                        textColor: FlutterFlowTheme.of(context).primaryText,
+                        pickerFontFamily: 'Outfit',
+                      );
                       if (selectedMedia != null &&
-                          selectedMedia.every(
-                            (m) => validateFileFormat(m.storagePath, context),
-                          )) {
+                          selectedMedia.every((m) =>
+                              validateFileFormat(m.storagePath, context))) {
                         safeSetState(() => _model.isDataUploading = true);
                         var selectedUploadedFiles = <FFUploadedFile>[];
 
@@ -157,31 +155,25 @@ class _HomeWidgetState extends State<HomeWidget> {
                             'Uploading file...',
                             showLoading: true,
                           );
-                          selectedUploadedFiles =
-                              selectedMedia
-                                  .map(
-                                    (m) => FFUploadedFile(
-                                      name: m.storagePath.split('/').last,
-                                      bytes: m.bytes,
-                                      height: m.dimensions?.height,
-                                      width: m.dimensions?.width,
-                                      blurHash: m.blurHash,
-                                    ),
-                                  )
-                                  .toList();
-
-                          downloadUrls =
-                              (await Future.wait(
-                                    selectedMedia.map(
-                                      (m) async => await uploadData(
-                                        m.storagePath,
-                                        m.bytes,
-                                      ),
-                                    ),
+                          selectedUploadedFiles = selectedMedia
+                              .map((m) => FFUploadedFile(
+                                    name: m.storagePath.split('/').last,
+                                    bytes: m.bytes,
+                                    height: m.dimensions?.height,
+                                    width: m.dimensions?.width,
+                                    blurHash: m.blurHash,
                                   ))
-                                  .where((u) => u != null)
-                                  .map((u) => u!)
-                                  .toList();
+                              .toList();
+
+                          downloadUrls = (await Future.wait(
+                            selectedMedia.map(
+                              (m) async =>
+                                  await uploadData(m.storagePath, m.bytes),
+                            ),
+                          ))
+                              .where((u) => u != null)
+                              .map((u) => u!)
+                              .toList();
                         } finally {
                           ScaffoldMessenger.of(context).hideCurrentSnackBar();
                           _model.isDataUploading = false;
@@ -215,7 +207,9 @@ class _HomeWidgetState extends State<HomeWidget> {
                           width: 90,
                           height: 90,
                           clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(shape: BoxShape.circle),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
                           child: CachedNetworkImage(
                             fadeInDuration: Duration(milliseconds: 500),
                             fadeOutDuration: Duration(milliseconds: 500),
@@ -240,13 +234,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                 decoration: InputDecoration(
                   labelText: 'Your Name',
                   labelStyle: FlutterFlowTheme.of(context).labelMedium.override(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-                  ),
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                   hintStyle: FlutterFlowTheme.of(context).labelMedium.override(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-                  ),
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: FlutterFlowTheme.of(context).alternate,
@@ -279,12 +273,12 @@ class _HomeWidgetState extends State<HomeWidget> {
                   fillColor: FlutterFlowTheme.of(context).secondaryBackground,
                   contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                 ),
-                style: FlutterFlowTheme.of(
-                  context,
-                ).bodyMedium.override(fontFamily: 'Inter', letterSpacing: 0.0),
-                validator: _model.yourNameTextControllerValidator.asValidator(
-                  context,
-                ),
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Inter',
+                      letterSpacing: 0.0,
+                    ),
+                validator:
+                    _model.yourNameTextControllerValidator.asValidator(context),
               ),
             ),
             Padding(
@@ -297,13 +291,13 @@ class _HomeWidgetState extends State<HomeWidget> {
                 decoration: InputDecoration(
                   labelText: 'Your City',
                   labelStyle: FlutterFlowTheme.of(context).labelMedium.override(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-                  ),
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                   hintStyle: FlutterFlowTheme.of(context).labelMedium.override(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-                  ),
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: FlutterFlowTheme.of(context).alternate,
@@ -336,21 +330,21 @@ class _HomeWidgetState extends State<HomeWidget> {
                   fillColor: FlutterFlowTheme.of(context).secondaryBackground,
                   contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                 ),
-                style: FlutterFlowTheme.of(
-                  context,
-                ).bodyMedium.override(fontFamily: 'Inter', letterSpacing: 0.0),
-                validator: _model.cityTextControllerValidator.asValidator(
-                  context,
-                ),
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Inter',
+                      letterSpacing: 0.0,
+                    ),
+                validator:
+                    _model.cityTextControllerValidator.asValidator(context),
               ),
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(20, 0, 20, 12),
               child: FlutterFlowDropDown<String>(
-                controller:
-                    _model.stateValueController ??= FormFieldController<String>(
-                      _model.stateValue ??= 'State',
-                    ),
+                controller: _model.stateValueController ??=
+                    FormFieldController<String>(
+                  _model.stateValue ??= 'State',
+                ),
                 options: [
                   'State',
                   'Alabama',
@@ -402,14 +396,15 @@ class _HomeWidgetState extends State<HomeWidget> {
                   'Washingto',
                   'West Virginia',
                   'Wisconsin',
-                  'Wyoming',
+                  'Wyoming'
                 ],
                 onChanged: (val) => safeSetState(() => _model.stateValue = val),
                 width: double.infinity,
                 height: 56,
-                textStyle: FlutterFlowTheme.of(
-                  context,
-                ).bodyMedium.override(fontFamily: 'Inter', letterSpacing: 0.0),
+                textStyle: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Inter',
+                      letterSpacing: 0.0,
+                    ),
                 hintText: 'Select State',
                 icon: Icon(
                   Icons.keyboard_arrow_down_rounded,
@@ -436,14 +431,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                 obscureText: false,
                 decoration: InputDecoration(
                   labelStyle: FlutterFlowTheme.of(context).labelMedium.override(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-                  ),
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                   hintText: 'Your bio',
                   hintStyle: FlutterFlowTheme.of(context).labelMedium.override(
-                    fontFamily: 'Inter',
-                    letterSpacing: 0.0,
-                  ),
+                        fontFamily: 'Inter',
+                        letterSpacing: 0.0,
+                      ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
                       color: FlutterFlowTheme.of(context).alternate,
@@ -476,14 +471,14 @@ class _HomeWidgetState extends State<HomeWidget> {
                   fillColor: FlutterFlowTheme.of(context).secondaryBackground,
                   contentPadding: EdgeInsetsDirectional.fromSTEB(20, 24, 0, 24),
                 ),
-                style: FlutterFlowTheme.of(
-                  context,
-                ).bodyMedium.override(fontFamily: 'Inter', letterSpacing: 0.0),
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily: 'Inter',
+                      letterSpacing: 0.0,
+                    ),
                 textAlign: TextAlign.start,
                 maxLines: 3,
-                validator: _model.myBioTextControllerValidator.asValidator(
-                  context,
-                ),
+                validator:
+                    _model.myBioTextControllerValidator.asValidator(context),
               ),
             ),
             Align(
@@ -501,15 +496,17 @@ class _HomeWidgetState extends State<HomeWidget> {
                     padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     iconPadding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                     color: FlutterFlowTheme.of(context).primary,
-                    textStyle: FlutterFlowTheme.of(
-                      context,
-                    ).titleMedium.override(
-                      fontFamily: 'Inter Tight',
-                      color: Colors.white,
-                      letterSpacing: 0.0,
-                    ),
+                    textStyle:
+                        FlutterFlowTheme.of(context).titleMedium.override(
+                              fontFamily: 'Inter Tight',
+                              color: Colors.white,
+                              letterSpacing: 0.0,
+                            ),
                     elevation: 2,
-                    borderSide: BorderSide(color: Colors.transparent, width: 1),
+                    borderSide: BorderSide(
+                      color: Colors.transparent,
+                      width: 1,
+                    ),
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
