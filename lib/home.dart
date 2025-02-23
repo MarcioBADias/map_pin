@@ -169,15 +169,19 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                               borderRadius: BorderRadius.circular(16),
                             ),
                             alignment: AlignmentDirectional(0, 0),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8),
-                              child: Image.asset(
-                                'assets/images/map-pin.png',
-                                width: MediaQuery.sizeOf(context).width,
-                                height:
-                                    MediaQuery.sizeOf(context).height * 1.05,
-                                fit: BoxFit.cover,
-                              ),
+                            child: Stack(
+                              children: [
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Image.asset(
+                                    'assets/images/map-pin.png',
+                                    width: MediaQuery.sizeOf(context).width,
+                                    height: MediaQuery.sizeOf(context).height *
+                                        1.05,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -285,11 +289,10 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                         .dropDownValueController ??=
                                                     FormFieldController<String>(
                                                         null),
-                                                options: [
-                                                  'Option 1',
-                                                  'Option 2',
-                                                  'Option 3'
-                                                ],
+                                                options:
+                                                    homeAddressesMapRecordList
+                                                        .map((e) => e.address)
+                                                        .toList(),
                                                 onChanged: (val) =>
                                                     safeSetState(() => _model
                                                         .dropDownValue = val),
