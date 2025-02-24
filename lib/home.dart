@@ -243,10 +243,28 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   text:
                                                       '+ Adicionar Localização',
                                                   options: FFButtonOptions(
-                                                    width: MediaQuery.sizeOf(
-                                                                context)
-                                                            .width *
-                                                        0.75,
+                                                    width: () {
+                                                      if (MediaQuery.sizeOf(
+                                                                  context)
+                                                              .width <
+                                                          kBreakpointSmall) {
+                                                        return 290.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointMedium) {
+                                                        return 500.0;
+                                                      } else if (MediaQuery
+                                                                  .sizeOf(
+                                                                      context)
+                                                              .width <
+                                                          kBreakpointLarge) {
+                                                        return 500.0;
+                                                      } else {
+                                                        return 290.0;
+                                                      }
+                                                    }(),
                                                     height: 40,
                                                     padding:
                                                         EdgeInsetsDirectional
@@ -296,10 +314,25 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 onChanged: (val) =>
                                                     safeSetState(() => _model
                                                         .dropDownValue = val),
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        0.75,
+                                                width: () {
+                                                  if (MediaQuery.sizeOf(context)
+                                                          .width <
+                                                      kBreakpointSmall) {
+                                                    return 295.0;
+                                                  } else if (MediaQuery.sizeOf(
+                                                              context)
+                                                          .width <
+                                                      kBreakpointMedium) {
+                                                    return 505.0;
+                                                  } else if (MediaQuery.sizeOf(
+                                                              context)
+                                                          .width <
+                                                      kBreakpointLarge) {
+                                                    return 505.0;
+                                                  } else {
+                                                    return 200.0;
+                                                  }
+                                                }(),
                                                 height: 40,
                                                 textStyle:
                                                     FlutterFlowTheme.of(context)
@@ -350,10 +383,26 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 },
                                                 text: 'Carregar Localozação',
                                                 options: FFButtonOptions(
-                                                  width:
-                                                      MediaQuery.sizeOf(context)
-                                                              .width *
-                                                          0.75,
+                                                  width: () {
+                                                    if (MediaQuery.sizeOf(
+                                                                context)
+                                                            .width <
+                                                        kBreakpointSmall) {
+                                                      return 290.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointMedium) {
+                                                      return 500.0;
+                                                    } else if (MediaQuery
+                                                                .sizeOf(context)
+                                                            .width <
+                                                        kBreakpointLarge) {
+                                                      return 500.0;
+                                                    } else {
+                                                      return 290.0;
+                                                    }
+                                                  }(),
                                                   height: 40,
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(16, 0, 16, 0),
@@ -420,11 +469,28 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                       ),
                                                       buttonOptions:
                                                           FFButtonOptions(
-                                                        width:
-                                                            MediaQuery.sizeOf(
-                                                                        context)
-                                                                    .width *
-                                                                0.63,
+                                                        width: () {
+                                                          if (MediaQuery.sizeOf(
+                                                                      context)
+                                                                  .width <
+                                                              kBreakpointSmall) {
+                                                            return 245.0;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointMedium) {
+                                                            return 455.0;
+                                                          } else if (MediaQuery
+                                                                      .sizeOf(
+                                                                          context)
+                                                                  .width <
+                                                              kBreakpointLarge) {
+                                                            return 455.0;
+                                                          } else {
+                                                            return 180.0;
+                                                          }
+                                                        }(),
                                                         height: 40,
                                                         color:
                                                             Color(0xFFFFAF4D),
@@ -473,9 +539,43 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                 .info,
                                                         size: 24,
                                                       ),
-                                                      onPressed: () {
-                                                        print(
-                                                            'IconButton pressed ...');
+                                                      onPressed: () async {
+                                                        safeSetState(() {
+                                                          _model.textController1
+                                                                  ?.text =
+                                                              _model
+                                                                  .placePickerValue
+                                                                  .address;
+                                                        });
+                                                        safeSetState(() {
+                                                          _model.textController2
+                                                                  ?.text =
+                                                              _model
+                                                                  .placePickerValue
+                                                                  .city;
+                                                        });
+                                                        safeSetState(() {
+                                                          _model.textController3
+                                                                  ?.text =
+                                                              _model
+                                                                  .placePickerValue
+                                                                  .state;
+                                                        });
+                                                        safeSetState(() {
+                                                          _model.textController4
+                                                                  ?.text =
+                                                              _model
+                                                                  .placePickerValue
+                                                                  .zipCode;
+                                                        });
+                                                        safeSetState(() {
+                                                          _model.textController5
+                                                                  ?.text =
+                                                              _model
+                                                                  .placePickerValue
+                                                                  .latLng
+                                                                  .toString();
+                                                        });
                                                       },
                                                     ),
                                                   ),
@@ -599,124 +699,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                         Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
-                                            if (FFAppState().showAddressForm ==
-                                                true)
-                                              Expanded(
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(0, 0, 0, 10),
-                                                  child: Container(
-                                                    width: 200,
-                                                    child: TextFormField(
-                                                      controller: _model
-                                                          .textController2,
-                                                      focusNode: _model
-                                                          .textFieldFocusNode2,
-                                                      autofocus: false,
-                                                      obscureText: false,
-                                                      decoration:
-                                                          InputDecoration(
-                                                        isDense: true,
-                                                        labelStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Inter',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                        hintText: 'Bairro',
-                                                        hintStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .labelMedium
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Inter',
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                ),
-                                                        enabledBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0xFF4B39EF),
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        focusedBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: Color(
-                                                                0x00000000),
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        errorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .error,
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        focusedErrorBorder:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              BorderSide(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .error,
-                                                            width: 1,
-                                                          ),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(8),
-                                                        ),
-                                                        filled: true,
-                                                        fillColor: FlutterFlowTheme
-                                                                .of(context)
-                                                            .secondaryBackground,
-                                                      ),
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily: 'Inter',
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                      cursorColor:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      validator: _model
-                                                          .textController2Validator
-                                                          .asValidator(context),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                          ],
-                                        ),
-                                      if (FFAppState().showAddressForm == true)
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
                                             Expanded(
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
@@ -725,9 +707,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   width: 200,
                                                   child: TextFormField(
                                                     controller:
-                                                        _model.textController3,
+                                                        _model.textController2,
                                                     focusNode: _model
-                                                        .textFieldFocusNode3,
+                                                        .textFieldFocusNode2,
                                                     autofocus: false,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
@@ -816,7 +798,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                 context)
                                                             .primaryText,
                                                     validator: _model
-                                                        .textController3Validator
+                                                        .textController2Validator
                                                         .asValidator(context),
                                                   ),
                                                 ),
@@ -830,9 +812,9 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   width: 200,
                                                   child: TextFormField(
                                                     controller:
-                                                        _model.textController4,
+                                                        _model.textController3,
                                                     focusNode: _model
-                                                        .textFieldFocusNode4,
+                                                        .textFieldFocusNode3,
                                                     autofocus: false,
                                                     obscureText: false,
                                                     decoration: InputDecoration(
@@ -921,7 +903,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                 context)
                                                             .primaryText,
                                                     validator: _model
-                                                        .textController4Validator
+                                                        .textController3Validator
                                                         .asValidator(context),
                                                   ),
                                                 ),
@@ -938,7 +920,112 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(0, 0, 0, 10),
                                                 child: Container(
-                                                  width: 200,
+                                                  width: 90,
+                                                  child: TextFormField(
+                                                    controller:
+                                                        _model.textController4,
+                                                    focusNode: _model
+                                                        .textFieldFocusNode4,
+                                                    autofocus: false,
+                                                    obscureText: false,
+                                                    decoration: InputDecoration(
+                                                      isDense: true,
+                                                      labelStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      hintText: 'CEP',
+                                                      hintStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .labelMedium
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Inter',
+                                                                letterSpacing:
+                                                                    0.0,
+                                                              ),
+                                                      enabledBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0xFF4B39EF),
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      focusedBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color:
+                                                              Color(0x00000000),
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      errorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      focusedErrorBorder:
+                                                          OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .error,
+                                                          width: 1,
+                                                        ),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor: FlutterFlowTheme
+                                                              .of(context)
+                                                          .secondaryBackground,
+                                                    ),
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Inter',
+                                                          letterSpacing: 0.0,
+                                                        ),
+                                                    cursorColor:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primaryText,
+                                                    validator: _model
+                                                        .textController4Validator
+                                                        .asValidator(context),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(10, 0, 0, 10),
+                                                child: Container(
+                                                  width: 90,
                                                   child: TextFormField(
                                                     controller:
                                                         _model.textController5,
@@ -958,7 +1045,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                                 letterSpacing:
                                                                     0.0,
                                                               ),
-                                                      hintText: 'CEP',
+                                                      hintText: 'Cordenadas',
                                                       hintStyle:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -1055,14 +1142,12 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                         createAddressesMapRecordData(
                                                       address: _model
                                                           .textController1.text,
-                                                      district: _model
-                                                          .textController2.text,
                                                       city: _model
-                                                          .textController3.text,
+                                                          .textController2.text,
                                                       state: _model
-                                                          .textController4.text,
+                                                          .textController3.text,
                                                       cep: _model
-                                                          .textController5.text,
+                                                          .textController4.text,
                                                       latlon: _model
                                                           .placePickerValue
                                                           .latLng,
@@ -1091,8 +1176,6 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   ),
                                                 );
                                                 safeSetState(() {
-                                                  _model.textController5
-                                                      ?.clear();
                                                   _model.textController4
                                                       ?.clear();
                                                   _model.textController3
@@ -1100,6 +1183,8 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                                   _model.textController2
                                                       ?.clear();
                                                   _model.textController1
+                                                      ?.clear();
+                                                  _model.textController5
                                                       ?.clear();
                                                 });
                                                 FFAppState().showAddressForm =
@@ -1110,10 +1195,25 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                                               },
                                               text: 'Adicionar Localizacao',
                                               options: FFButtonOptions(
-                                                width:
-                                                    MediaQuery.sizeOf(context)
-                                                            .width *
-                                                        0.75,
+                                                width: () {
+                                                  if (MediaQuery.sizeOf(context)
+                                                          .width <
+                                                      kBreakpointSmall) {
+                                                    return 290.0;
+                                                  } else if (MediaQuery.sizeOf(
+                                                              context)
+                                                          .width <
+                                                      kBreakpointMedium) {
+                                                    return 500.0;
+                                                  } else if (MediaQuery.sizeOf(
+                                                              context)
+                                                          .width <
+                                                      kBreakpointLarge) {
+                                                    return 500.0;
+                                                  } else {
+                                                    return 290.0;
+                                                  }
+                                                }(),
                                                 height: 40,
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(16, 0, 16, 0),
@@ -1152,7 +1252,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                   ),
                   if (FFAppState().showAddressForm == false)
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 450, 20, 50),
+                      padding: EdgeInsetsDirectional.fromSTEB(20, 650, 20, 50),
                       child: FlutterFlowGoogleMap(
                         controller: _model.googleMapsController,
                         onCameraIdle: (latLng) =>

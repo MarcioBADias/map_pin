@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:math';
 import 'dart:ui';
+import '/index.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -18,6 +19,9 @@ export 'login_model.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
+
+  static String routeName = 'login';
+  static String routePath = '/login';
 
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
@@ -78,6 +82,8 @@ class _LoginWidgetState extends State<LoginWidget>
         ],
       ),
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
 
   @override
@@ -353,7 +359,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                     return;
                                   }
 
-                                  context.goNamedAuth('Home', context.mounted);
+                                  context.goNamedAuth(
+                                      HomeWidget.routeName, context.mounted);
                                 },
                                 text: 'Entrar',
                                 options: FFButtonOptions(
@@ -406,7 +413,8 @@ class _LoginWidgetState extends State<LoginWidget>
                                     return;
                                   }
 
-                                  context.goNamedAuth('Home', context.mounted);
+                                  context.goNamedAuth(
+                                      HomeWidget.routeName, context.mounted);
                                 },
                                 text: 'Entrar conta do Google',
                                 icon: FaIcon(
