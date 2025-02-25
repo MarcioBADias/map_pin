@@ -1252,7 +1252,7 @@ class _HomeWidgetState extends State<HomeWidget> with TickerProviderStateMixin {
                   ),
                   if (FFAppState().showAddressForm == false)
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(20, 650, 20, 50),
+                      padding: EdgeInsetsDirectional.fromSTEB(20, 450, 20, 50),
                       child: FlutterFlowGoogleMap(
                         controller: _model.googleMapsController,
                         onCameraIdle: (latLng) =>
